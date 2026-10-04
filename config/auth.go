@@ -19,5 +19,6 @@ func InitAuth() {
 			App.GithubClientID,
 			App.GithubClientSecret,
 			App.AuthRedirectURL+"/github/callback",
+			"user:email",
 		))
 }

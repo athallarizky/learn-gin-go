@@ -39,6 +39,7 @@ func SetupRouter() {
 		auth := v1.Group("/auth")
 		{
 
+			auth.GET("/logout", routes.Logout)
 			auth.GET("/:provider", routes.GetAuthProvider)
 			auth.GET("/:provider/callback", routes.GetAuthProviderContext)
 		}
