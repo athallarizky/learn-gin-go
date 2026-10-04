@@ -4,6 +4,7 @@ go 1.26.3
 
 require (
 	github.com/gin-gonic/gin v1.12.0
+	github.com/golang-jwt/jwt/v5 v5.3.1
 	github.com/gosimple/slug v1.15.0
 	github.com/joho/godotenv v1.5.1
 	github.com/markbates/goth v1.82.0

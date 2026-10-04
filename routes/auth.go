@@ -43,8 +43,18 @@ func GetAuthProviderContext(c *gin.Context) {
 		return
 	}
 
+	jwtToken, err := config.GenerateToken(userData.ID, userData.Role)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"status":  "error",
+			"message": "failed to create token: " + err.Error(),
+		})
+		return
+	}
+
 	c.JSON(http.StatusOK, gin.H{
 		"status": "success",
+		"token":  jwtToken,
 		"user":   userData,
 	})
 }
