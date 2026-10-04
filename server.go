@@ -15,6 +15,9 @@ func SetupRouter() {
 		defer sqlDB.Close()
 	}
 
+	// Auth Config
+	config.InitAuth()
+
 	// GIN Router Config
 	router := gin.Default()
 
@@ -31,6 +34,13 @@ func SetupRouter() {
 			articles.GET("/", routes.GetHome)
 			articles.GET("/:slug", routes.GetArticle)
 			articles.POST("/", routes.PostArticle)
+		}
+
+		auth := v1.Group("/auth")
+		{
+
+			auth.GET("/:provider", routes.GetAuthProvider)
+			auth.GET("/:provider/callback", routes.GetAuthProviderContext)
 		}
 	}
 
