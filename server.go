@@ -2,6 +2,7 @@ package main
 
 import (
 	"learn-gin-go/config"
+	"learn-gin-go/middlewares"
 	"learn-gin-go/routes"
 
 	"github.com/gin-gonic/gin"
@@ -29,11 +30,17 @@ func SetupRouter() {
 
 	v1 := router.Group("/api/v1/")
 	{
-		articles := v1.Group("/article")
+		articles := v1.Group("/articles")
 		{
 			articles.GET("/", routes.GetHome)
 			articles.GET("/:slug", routes.GetArticle)
-			articles.POST("/", routes.PostArticle)
+
+			protected := articles.Group("/")
+			protected.Use(middlewares.AuthMiddleware())
+			{
+				protected.GET("/testing", routes.Testing)
+				protected.POST("/", routes.PostArticle)
+			}
 		}
 
 		auth := v1.Group("/auth")

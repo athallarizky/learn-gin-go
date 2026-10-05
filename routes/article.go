@@ -10,6 +10,14 @@ import (
 	"gorm.io/gorm"
 )
 
+func Testing(c *gin.Context) {
+	c.JSON(
+		200,
+		gin.H{
+			"status": "BERHASIL MASUK PAGE",
+		})
+}
+
 func GetHome(c *gin.Context) {
 	items := []models.Article{}
 	config.DB.Find(&items)
@@ -46,10 +54,13 @@ func GetArticle(c *gin.Context) {
 }
 
 func PostArticle(c *gin.Context) {
+	userID := c.MustGet("userID").(uint)
+
 	item := models.Article{
-		Title: c.PostForm("title"),
-		Desc:  c.PostForm("desc"),
-		Slug:  slug.Make(c.PostForm("title")),
+		Title:  c.PostForm("title"),
+		Desc:   c.PostForm("desc"),
+		Slug:   slug.Make(c.PostForm("title")),
+		UserID: userID,
 	}
 
 	if err := config.DB.Create(&item).Error; err != nil {
