@@ -34,12 +34,14 @@ func SetupRouter() {
 		{
 			articles.GET("/", routes.GetHome)
 			articles.GET("/:slug", routes.GetArticle)
+			articles.GET("/tag/:tag", routes.GetArticleByTag)
 
 			protected := articles.Group("/")
 			protected.Use(middlewares.AuthMiddleware())
 			{
 				protected.GET("/testing", routes.Testing)
 				protected.POST("/", routes.PostArticle)
+				protected.PATCH("/:slug", routes.PatchArticle)
 			}
 		}
 

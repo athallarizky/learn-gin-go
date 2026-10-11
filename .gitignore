@@ -33,3 +33,7 @@ tmp/
 
 # Database data volume
 postgres_data/
+
+# Planning & learning docs — private, synced to engineering-handbook
+/docs
+/docs/
