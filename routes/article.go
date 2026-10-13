@@ -142,3 +142,17 @@ func PatchArticle(c *gin.Context) {
 		"data":    oldItem,
 	})
 }
+
+func AdminDeleteArticle(c *gin.Context) {
+	slug := c.Param(("slug"))
+	var article models.Article
+
+	config.DB.Where("slug = ?", slug).Delete(&article)
+
+	c.JSON(
+		200,
+		gin.H{
+			"status": "success",
+			"data":   article,
+		})
+}

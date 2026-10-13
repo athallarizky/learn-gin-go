@@ -30,11 +30,20 @@ func SetupRouter() {
 
 	v1 := router.Group("/api/v1/")
 	{
+
+		admin := v1.Group("/admin")
+		admin.Use(middlewares.AuthMiddleware(), middlewares.IsAdmin())
+		{
+			admin.DELETE("/article/:slug", routes.AdminDeleteArticle)
+		}
+
 		articles := v1.Group("/articles")
 		{
 			articles.GET("/", routes.GetHome)
 			articles.GET("/:slug", routes.GetArticle)
 			articles.GET("/tag/:tag", routes.GetArticleByTag)
+			// example calling 2 middleware
+			// articles.DELETE("/delete/:slug", middlewares.AuthMiddleware(), middlewares.IsAdmin(), routes.AdminDeleteArticle)
 
 			protected := articles.Group("/")
 			protected.Use(middlewares.AuthMiddleware())
