@@ -39,7 +39,6 @@ func SetupRouter() {
 			protected := articles.Group("/")
 			protected.Use(middlewares.AuthMiddleware())
 			{
-				protected.GET("/testing", routes.Testing)
 				protected.POST("/", routes.PostArticle)
 				protected.PATCH("/:slug", routes.PatchArticle)
 			}
@@ -51,6 +50,11 @@ func SetupRouter() {
 			auth.GET("/logout", routes.Logout)
 			auth.GET("/:provider", routes.GetAuthProvider)
 			auth.GET("/:provider/callback", routes.GetAuthProviderContext)
+		}
+
+		user := v1.Group("user")
+		{
+			user.GET("/articles", middlewares.AuthMiddleware(), routes.GetUserArticles)
 		}
 	}
 

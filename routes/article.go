@@ -13,14 +13,6 @@ import (
 	"gorm.io/gorm"
 )
 
-func Testing(c *gin.Context) {
-	c.JSON(
-		200,
-		gin.H{
-			"status": "BERHASIL MASUK PAGE",
-		})
-}
-
 func GetHome(c *gin.Context) {
 	items := []models.Article{}
 	config.DB.Find(&items)
